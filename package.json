@@ -8,14 +8,14 @@
     "Ezequiel Garcia <ezequiel.garcia88@gmail.com>",
     "Santiago Bruno <santiago.emilio.bruno@gmail.com>"
   ],
-   "files": [
-     ".meteor",
-     "pacts",
-     "server",
-     "client",
-     "tests",
-     "packages",
-     "packages.json"
+  "files": [
+    ".meteor",
+    "pacts",
+    "server",
+    "client",
+    "tests",
+    "packages",
+    "packages.json"
   ],
   "scripts": {
     "start": "meteor run"
@@ -37,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/bochaco/pact-mock-reactive/issues"
   },
-  "homepage": "https://github.com/bochaco/pact-mock-reactive"
+  "homepage": "https://github.com/bochaco/pact-mock-reactive",
+  "dependencies": {
+    "@babel/runtime": "^7.17.9"
+  }
 }
