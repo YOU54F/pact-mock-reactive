@@ -52,7 +52,7 @@ Additionally, this mock service provides the following features in the frontend 
 ## Screenshots
 
 View of all registered/received interactions:
-![View of all registered/received interactions](https://github.com/bochaco/pact-mock-reactive/blob/master/doc/screenshot1.png)
+![View of all registered/received inter](https://github.com/bochaco/pact-mock-reactive/blob/master/doc/screenshot1.png)
 
 View of the Pact contract file:
 ![View of the Pact contract file](https://github.com/bochaco/pact-mock-reactive/blob/master/doc/screenshot2.png)

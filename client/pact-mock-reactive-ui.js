@@ -195,18 +195,24 @@ Template.interaction.events({
 });
 
 Template.showPacts.helpers({
+
+    
     pacts: function () {
+        console.log('Template.showPacts.helpers')
         var str = "",
             pact = {},
             interactions = Interactions.find({
-                disabled: false
-            }).fetch(),
+    }).fetch(),
             groupedInteractions = _.groupBy(interactions, function (element) {
                 return element.consumer + element.provider;
             }),
             pairs = [];
-
+            console.log('Interactions',Interactions)
+            console.log(interactions)
         _.each(groupedInteractions, function (value) {
+            console.log('trying to show each interaction')
+            console.log(value)
+
             str += "<span class='black'><b>Pact between " + value[0].consumer + " and " + value[0].provider + ":</b></span><br/>";
             pact = {
                 consumer: {
@@ -316,11 +322,19 @@ Template.importPactFile.helpers({
 
 Template.importPactFile.events({
     'change .importPactFile': function (event) {
+        console.log('saf')
         var reader = new FileReader();
+        console.log(reader)
+
         reader.onload = function (e) {
+            console.log(JSON.parse(e.target.result))
+            console.log(event.target.files[0].name)
+            console.log('bsaf')
+
             Session.set("importPactFile", JSON.parse(e.target.result));
             Session.set("importFilename", event.target.files[0].name);
         };
         reader.readAsText(event.target.files[0]);
+
     }
 });

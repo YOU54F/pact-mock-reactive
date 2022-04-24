@@ -172,6 +172,7 @@ function convertAllMatchersInObj(value, matchingRules, path) {
 
 Meteor.startup(function () {
     // code to run on server at startup
+    console.log('meaty-or is alive')
     return;
 });
 
@@ -181,11 +182,14 @@ var pathNpm = Npm.require('path'),
     appRoot = pathNpm.resolve('.');
 // find better way
 appRoot = appRoot.indexOf('.meteor') >= 0 ? appRoot.substring(0, appRoot.indexOf('.meteor')) : appRoot;
+console.log(appRoot, 'get the app route')
 
 var fs = Npm.require('fs'),
     normalizeConsumerProvider = function (req) {
         req.headers['x-pact-consumer'] = req.headers['x-pact-consumer'] || NULL;
         req.headers['x-pact-provider'] = req.headers['x-pact-provider'] || NULL;
+        console.log('normalizeConsumerProvider',req)
+
     },
     deleteInteractions = function (req) {
         var consumerName = req.headers['x-pact-consumer'],
@@ -194,8 +198,11 @@ var fs = Npm.require('fs'),
         Interactions.remove({
             $or: [{ consumer: consumerName }, { provider: providerName }, { expected: 0 }]
         });
+        console.log('deleteInteractions',req,consumerName,providerName)
+
     },
     insertInteraction = function (consumerName, providerName, interaction, expected, count) {
+        console.log('insertInteraction start ',consumerName, providerName, interaction, expected, count)
         //workaround for dots in the keys (problem with mongo)
         interaction = JSON.parse(escapeMetaCharacters(JSON.stringify(interaction)));
         Interactions.insert({
@@ -206,6 +213,9 @@ var fs = Npm.require('fs'),
             disabled: false,
             interaction: interaction
         });
+
+        console.log('insertInteraction end',interaction)
+
     },
     findInteraction = function (interaction, successCallback, errorCallback, selector, useMatchers) {
         var method = interaction.method,
@@ -347,6 +357,8 @@ var fs = Npm.require('fs'),
         }
     },
     registerInteractions = function (req, res) {
+        console.log('registerInteractions',req, res)
+
         var consumerName = req.headers['x-pact-consumer'],
             providerName = req.headers['x-pact-provider'],
             newInteractions = [],
@@ -492,6 +504,7 @@ var fs = Npm.require('fs'),
         }
     },
     verifyInteractions = function (req, res) {
+        console.log("verifyInteractions",req, res)
         var registeredReqs = Interactions.find({
             consumer: req.headers['x-pact-consumer'],
             provider: req.headers['x-pact-provider'],
@@ -544,6 +557,8 @@ var fs = Npm.require('fs'),
         }
     },
     createPact = function (consumer, provider) {
+        console.log('createPact',consumer, provider)
+
         var interactions = Interactions.find({
             $and : [{ $or : [{ consumer: consumer }, { consumer: NULL }] },
                     { $or : [{ provider: provider }, { provider: NULL }] }],
@@ -580,6 +595,8 @@ var fs = Npm.require('fs'),
         return pact;
     },
     writePact = function (req, res) {
+        console.log('writePact',req, res)
+
         if (req.body.consumer && req.body.consumer.name && req.body.provider && req.body.provider.name) {
             var pact = createPact(req.body.consumer.name, req.body.provider.name),
                 filename = (req.body.consumer.name.toLowerCase() + '-' + req.body.provider.name.toLowerCase()).replace(/\s/g, '_'),
@@ -663,6 +680,7 @@ Router.onBeforeAction(Iron.Router.bodyParser.text({
     'type': 'application/xml'
 }));
 
+
 Router.route('/interactions', { where: 'server' })
     .post(function () {
         normalizeConsumerProvider(this.request);
@@ -721,6 +739,8 @@ Meteor.methods({
         Interactions.remove({});
     },
     addInteraction: function (consumer, provider, interaction) {
+        console.log("addInteraction",consumer, provider, interaction)
+        console.log("interaction.request.method",interaction.request.method)
         if (!consumer || !consumer.length) {
             consumer = NULL;
         }
@@ -735,16 +755,22 @@ Meteor.methods({
             body : interaction.request.body
         },
             successCallback = function (matchingInteraction) {
+                console.log("successCallback",matchingInteraction)
+
                 if (consumer === matchingInteraction.consumer && provider === matchingInteraction.provider) {
                     Interactions.update({ _id: matchingInteraction._id }, { $inc: { expected: 1 } });
                 }
             },
             errorCallback = function () {
+                console.log("errorCallback",errorCallback)
+
                 insertInteraction(consumer, provider, interaction, 1, 0);
             };
         findInteraction(selector, successCallback, errorCallback);
     },
     writePacts: function (pairs) {
+        console.log("writePacts",pairs)
+
         var res = {};
         _.each(pairs, function (p) {
             writePact(p, res);
