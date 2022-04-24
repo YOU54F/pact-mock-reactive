@@ -4,24 +4,22 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-# velocity:core
+
 # semantic:ui-css
 
 insecure
 iron:router
-velocity:html-reporter
+
 cfs:standard-packages
 erasaur:meteor-lodash
 meteorhacks:npm
 npm-container
-sanjo:jasmine
 mongo
 meteor
 iron:controller
 iron:core
 iron:dynamic-template
 iron:layout
-amplify
 autoupdate
 base64
 binary-heap
@@ -45,7 +43,6 @@ cfs:tempstore
 cfs:upload-http
 cfs:worker
 check
-coffeescript
 ddp
 deps
 ejson
@@ -62,7 +59,6 @@ iron:url
 jquery
 json
 launch-screen
-less
 livedata
 logging
 meteor-platform
@@ -73,9 +69,6 @@ mobile-status-bar
 mongo-livedata
 observe-sequence
 ordered-dict
-package-version-parser
-practicalmeteor:chai
-practicalmeteor:loglevel
 raix:eventemitter
 random
 reactive-dict
@@ -83,10 +76,6 @@ reactive-var
 reload
 retry
 routepolicy
-sanjo:karma
-sanjo:long-running-child-process
-sanjo:meteor-files-helpers
-sanjo:meteor-version
 session
 spacebars
 spacebars-compiler
@@ -95,11 +84,6 @@ tracker
 ui
 underscore
 url
-velocity:chokidar
-
-velocity:meteor-internals
-velocity:meteor-stubs
-velocity:shim
 webapp
 webapp-hashing
 semantic:ui-css@=2.1.2
