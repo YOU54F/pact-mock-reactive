@@ -101,6 +101,7 @@ sanjo:karma@3.1.1
 sanjo:long-running-child-process@1.1.5
 sanjo:meteor-files-helpers@1.2.0_1
 sanjo:meteor-version@1.0.0
+semantic:ui-css@2.1.2
 session@1.2.0
 socket-stream-client@0.4.0
 spacebars@1.2.0

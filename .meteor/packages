@@ -102,3 +102,4 @@ velocity:meteor-stubs
 velocity:shim
 webapp
 webapp-hashing
+semantic:ui-css@=2.1.2
